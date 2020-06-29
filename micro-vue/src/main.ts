@@ -4,8 +4,11 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 import routes from './router';
 import store from './store';
+import mixin from './mixin';
 
 Vue.config.productionTip = false;
+
+Vue.mixin(mixin);
 
 let router: any = null;
 let instance: any = null;
@@ -43,6 +46,11 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log('[vue] props from main framework', props);
+  const data = props.data || {};
+  store.commit('global/SET_USERINFO', {
+    userName: data.userName,
+    userId: data.userId
+  });
   storeTest(props);
   render(props);
 }

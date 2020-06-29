@@ -5,6 +5,7 @@ import store from './store';
 import { fetch as fetchPolyfill } from 'whatwg-fetch';
 import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 import mixin from './mixin';
+import { request } from './utils/request';
 
 Vue.mixin(mixin);
 
@@ -47,7 +48,7 @@ function initApp() {
   render({ appContent: '', loading: true });
 }
 
-const request = (url: string) => {
+function customRequest(url: string) {
   return fetchPolyfill(url, {
     referrerPolicy: 'origin-when-cross-origin'
   });
@@ -55,35 +56,31 @@ const request = (url: string) => {
 
 initApp();
 
+const global = (store.state as any).global;
+
 const msg = {
   data: {
-    userInfo: 'liuwm',
-    fns: [
-      function getMicro () {
-        return 'micro1';
-      }
-    ]
+    ...global
   }
 };
 
-registerMicroApps(
-  [{
-    name: 'vue app',
-    entry: '//localhost:7002',
+async function init() {
+  const userConfig = await request('getUserConfig');
+  const apps = (userConfig.apps || []).map(app => ({
+    name: app.name,
+    entry: app.entry,
     render,
-    activeRule: genActiveRule('/dashboard'),
+    activeRule: genActiveRule(app.routerPrefix),
     props: msg
-  }, {
-    name: 'react app',
-    entry: '//localhost:7001',
-    render,
-    activeRule: genActiveRule('/react'),
-    props: msg
-  }]
-);
+  }));
 
-setDefaultMountApp('/dashboard');
+  registerMicroApps(apps);
 
-const opts: any = { fetch: request };
+  setDefaultMountApp(userConfig.defaultApp);
 
-start(opts);
+  const opts: any = { fetch: customRequest };
+
+  start(opts);
+}
+
+init();

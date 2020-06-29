@@ -15,7 +15,7 @@ const { protocol, hostname, port } = window.location;
 const ORIGIN = port ? `${protocol}//${hostname}:${port}/` : `${protocol}//${hostname}/`;
 
 // url前缀
-const PRE_URL = 'main/v1/';
+const PRE_URL = 'vue/v1/';
 
 const DEFAULT_CONFIG = {
   baseURL: '',
