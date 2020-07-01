@@ -6,7 +6,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/v1': {
-        target: 'http://localhost:7000'
+        target: 'http://micro.feminzai.com'
       }
     }
   }

@@ -1,8 +1,7 @@
 import { MutationTree } from 'vuex';
 
 interface IGlobalState {
-  userId: string;
-  userName: string;
+  userInfo: IUser;
 }
 
 interface IUser {
@@ -11,14 +10,15 @@ interface IUser {
 }
 
 const state: IGlobalState = {
-  userId: 'admin',
-  userName: 'Admin'
+  userInfo: {
+    userId: 'admin',
+    userName: 'Admin'
+  }
 };
 
 const mutations: MutationTree<IGlobalState> = {
   SET_USERINFO(state: IGlobalState, userInfo: IUser) {
-    state.userId = userInfo.userId;
-    state.userName = userInfo.userName;
+    state.userInfo = userInfo;
   }
 };
 

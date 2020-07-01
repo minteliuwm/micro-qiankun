@@ -33,11 +33,10 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 function storeTest(props: any) {
-  props.onGlobalStateChange &&
-    props.onGlobalStateChange(
-      (value, prev) => console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev),
-      true
-    );
+  props.onGlobalStateChange && props.onGlobalStateChange((value, prev) => {
+    console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev);
+    store.commit('global/SET_USERINFO', value.userInfo);
+  }, true);
 }
 
 export async function bootstrap() {
@@ -46,11 +45,6 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log('[vue] props from main framework', props);
-  const data = props.data || {};
-  store.commit('global/SET_USERINFO', {
-    userName: data.userName,
-    userId: data.userId
-  });
   storeTest(props);
   render(props);
 }

@@ -2,8 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import { fetch as fetchPolyfill } from 'whatwg-fetch';
-import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
+import { registerMicroApps, setDefaultMountApp, start, initGlobalState, MicroAppStateActions } from 'qiankun';
 import mixin from './mixin';
 import { request } from './utils/request';
 
@@ -48,21 +47,10 @@ function initApp() {
   render({ appContent: '', loading: true });
 }
 
-function customRequest(url: string) {
-  return fetchPolyfill(url, {
-    referrerPolicy: 'origin-when-cross-origin'
-  });
-};
-
 initApp();
 
 const global = (store.state as any).global;
-
-const msg = {
-  data: {
-    ...global
-  }
-};
+Vue.prototype.$globalStateActions = initGlobalState(global);
 
 async function init() {
   const userConfig = await request('getUserConfig');
@@ -70,17 +58,19 @@ async function init() {
     name: app.name,
     entry: app.entry,
     render,
+    // container: '#vue',
     activeRule: genActiveRule(app.routerPrefix),
-    props: msg
+    props: {}
   }));
 
   registerMicroApps(apps);
 
   setDefaultMountApp(userConfig.defaultApp);
 
-  const opts: any = { fetch: customRequest };
-
-  start(opts);
+  // 开启严格的样式隔离模式不能采用自定义 render 方式来渲染
+  // const options: any = { sandbox: { strictStyleIsolation: true } };
+  // start(options);
+  start();
 }
 
 init();

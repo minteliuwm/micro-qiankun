@@ -4,7 +4,7 @@
     <!-- 主应用的路由 -->
     <!-- <router-view /> -->
     <!-- 子应用内容区 -->
-    <div class="appContainer" v-html="content"></div>
+    <div id="vue" class="appContainer" v-html="content"></div>
   </div>
 </template>
 
@@ -40,5 +40,8 @@ export default class MApp extends Vue {
       height: 100%;
     }
   }
+  // .m-home {
+  //   background: #383838;
+  // }
 }
 </style>
