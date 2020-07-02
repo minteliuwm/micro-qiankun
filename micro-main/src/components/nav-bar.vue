@@ -3,11 +3,14 @@
     <div class="menu">
       <img class="logo" src="@/assets/logo.png">
     </div>
+    <div class="menu" @click="goto('vue app', '/subpage')">
+      原始菜单
+    </div>
     <div class="menu" @click="goto('vue app', '/dashboard')">
-      菜单1
+      子菜单1
     </div>
     <div class="menu" @click="goto('react app', '/react')">
-      菜单2
+      子菜单2
     </div>
     <div class="link" @click="switchUser">
       切换用户

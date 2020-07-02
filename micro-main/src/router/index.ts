@@ -5,16 +5,11 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [{
   path: '/',
-  redirect: 'dashboard'
+  redirect: 'subpage'
 }, {
-  path: '/dashboard*',
-  name: 'demo1',
-  component: () => import(/* webpackChunkName: "demo" */ '../views/demo1.vue')
-},
-{
-  path: '/react*',
-  name: 'demo2',
-  component: () => import(/* webpackChunkName: "demo" */ '../views/demo2.vue')
+  path: '/subpage',
+  name: 'subpage',
+  component: () => import(/* webpackChunkName: "demo" */ '../views/subpage.vue')
 }];
 
 const router = new VueRouter({

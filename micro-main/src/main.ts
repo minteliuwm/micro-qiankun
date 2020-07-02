@@ -65,7 +65,7 @@ async function init() {
 
   registerMicroApps(apps);
 
-  setDefaultMountApp(userConfig.defaultApp);
+  // setDefaultMountApp(userConfig.defaultApp);
 
   // 开启严格的样式隔离模式不能采用自定义 render 方式来渲染
   // const options: any = { sandbox: { strictStyleIsolation: true } };

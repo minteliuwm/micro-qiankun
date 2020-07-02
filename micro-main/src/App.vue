@@ -1,10 +1,10 @@
 <template>
   <div id="container">
     <u-nav-bar />
-    <!-- 主应用的路由 -->
-    <!-- <router-view /> -->
     <!-- 子应用内容区 -->
-    <div id="vue" class="appContainer" v-html="content"></div>
+    <div v-if="content" id="vue" class="appContainer" v-html="content"></div>
+    <!-- 主应用的路由 -->
+    <router-view v-else />
   </div>
 </template>
 
